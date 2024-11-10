@@ -45,7 +45,7 @@ export class CoffeemakerRepository {
       if (error instanceof PostgresError && error.code === "23505") {
         throw new AppError(
           409,
-          `Coffeemaker with name "${data.name}" already exists`,
+          `Coffeemaker with name "${data.name}" already exists`
         );
       }
       throw new AppError(500, "Failed to create coffeemaker");
@@ -54,18 +54,11 @@ export class CoffeemakerRepository {
 
   async delete(id: number): Promise<void> {
     try {
-      const result = await db
+      await db
         .delete(coffeemakers)
         .where(eq(coffeemakers.id, id))
         .returning({ id: coffeemakers.id });
-
-      if (!result[0]) {
-        throw new AppError(404, `Coffeemaker with id ${id} not found`);
-      }
     } catch (error) {
-      if (error instanceof AppError) {
-        throw error;
-      }
       throw new AppError(500, `Failed to delete coffeemaker with id ${id}`);
     }
   }

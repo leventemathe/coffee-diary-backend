@@ -40,7 +40,7 @@ export class CoffeeRepository {
       if (error instanceof PostgresError && error.code === "23505") {
         throw new AppError(
           409,
-          `Coffee with name "${data.name}" already exists`,
+          `Coffee with name "${data.name}" already exists`
         );
       }
       throw new AppError(500, "Failed to create coffee");
@@ -49,18 +49,11 @@ export class CoffeeRepository {
 
   async delete(id: number): Promise<void> {
     try {
-      const result = await db
+      await db
         .delete(coffees)
         .where(eq(coffees.id, id))
         .returning({ id: coffees.id });
-
-      if (!result[0]) {
-        throw new AppError(404, `Coffee with id ${id} not found`);
-      }
     } catch (error) {
-      if (error instanceof AppError) {
-        throw error;
-      }
       throw new AppError(500, `Failed to delete coffee with id ${id}`);
     }
   }
