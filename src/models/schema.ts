@@ -23,15 +23,7 @@ export const coffeemakers = pgTable("coffeemakers", {
   id: serial("id").primaryKey(),
   name: varchar("name").notNull().unique(),
   description: text("description"),
-  type: varchar("type", {
-    enum: [
-      "espresso_maker",
-      "pourover_maker",
-      "immersion_maker",
-      "drip_maker",
-      "other_maker",
-    ],
-  }),
+  type: varchar("type").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

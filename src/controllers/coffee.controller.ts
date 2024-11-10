@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { coffeeRepository } from "../repositories/coffee.repository";
-import { insertCoffeeSchema } from "../validation/coffee.schema";
 import { AppError } from "../middleware/error.middleware";
 
 export class CoffeeController {
@@ -10,8 +9,7 @@ export class CoffeeController {
   }
 
   async createCoffee(req: Request, res: Response) {
-    const validatedData = insertCoffeeSchema.parse(req.body);
-    const coffee = await coffeeRepository.create(validatedData);
+    const coffee = await coffeeRepository.create(req.body);
     res.status(201).json(coffee);
   }
 
@@ -19,11 +17,6 @@ export class CoffeeController {
     const id = Number(req.params.id);
     if (Number.isNaN(id)) {
       throw new AppError(400, "Invalid ID");
-    }
-
-    const coffee = await coffeeRepository.findById(id);
-    if (!coffee) {
-      throw new AppError(404, "Coffee not found");
     }
 
     await coffeeRepository.delete(id);
