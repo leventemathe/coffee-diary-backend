@@ -45,7 +45,7 @@ export class CoffeemakerRepository {
       if (error instanceof PostgresError && error.code === "23505") {
         throw new AppError(
           409,
-          `Coffeemaker with name "${data.name}" already exists`
+          `Coffeemaker with name "${data.name}" already exists`,
         );
       }
       throw new AppError(500, "Failed to create coffeemaker");

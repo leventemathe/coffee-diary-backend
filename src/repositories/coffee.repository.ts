@@ -40,7 +40,7 @@ export class CoffeeRepository {
       if (error instanceof PostgresError && error.code === "23505") {
         throw new AppError(
           409,
-          `Coffee with name "${data.name}" already exists`
+          `Coffee with name "${data.name}" already exists`,
         );
       }
       throw new AppError(500, "Failed to create coffee");

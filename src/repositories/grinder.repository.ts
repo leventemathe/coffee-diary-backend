@@ -42,7 +42,7 @@ export class GrinderRepository {
       if (error instanceof PostgresError && error.code === "23505") {
         throw new AppError(
           409,
-          `Grinder with name "${data.name}" already exists`
+          `Grinder with name "${data.name}" already exists`,
         );
       }
       throw new AppError(500, "Failed to create grinder");

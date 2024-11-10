@@ -10,6 +10,6 @@ grinderRouter
   .post(
     "/",
     validateRequest({ body: insertGrinderSchema }),
-    grinderController.createGrinder
+    grinderController.createGrinder,
   )
   .delete("/:id", grinderController.deleteGrinder);
