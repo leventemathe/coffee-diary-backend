@@ -2,18 +2,20 @@
   "name": "coffee-diary-backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node-dev src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "db:push": "drizzle-kit push:pg",
-    "db:studio": "drizzle-kit studio",
+    "dev": "ts-node-dev src/app.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --check \"src/**/*.ts\"",
     "format:fix": "prettier --write \"src/**/*.ts\"",
     "type-check": "tsc --noEmit",
     "validate": "npm run type-check && npm run lint && npm run format",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:start": "docker run --name coffee-diary-db -e POSTGRES_DB=coffee_diary -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5450:5450 -v coffee_diary_data:/var/lib/postgresql/data -d postgres:17",
+    "db:restart": "docker stop coffee-diary-db && docker rm coffee-diary-db && npm run db:start",
+    "db:push": "drizzle-kit push:pg",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "cors": "^2.8.5",
