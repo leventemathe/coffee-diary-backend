@@ -12,6 +12,7 @@ import { coffeemakerRouter } from "./routes/coffeemaker.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import { grinderRouter } from "./routes/grinder.routes";
 import { db } from "./config/database";
+import { brewRouter } from "./routes/brew.routes";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/v1/coffee", coffeeRouter);
 app.use("/api/v1/coffeemaker", coffeemakerRouter);
 app.use("/api/v1/grinder", grinderRouter);
+app.use("/api/v1/brew", brewRouter);
 
 app.use(errorHandler);
 

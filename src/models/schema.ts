@@ -3,9 +3,10 @@ import {
   serial,
   text,
   timestamp,
-  numeric,
   boolean,
   varchar,
+  integer,
+  real,
 } from "drizzle-orm/pg-core";
 
 export const coffees = pgTable("coffees", {
@@ -38,18 +39,24 @@ export const grinders = pgTable("grinders", {
 
 export const brews = pgTable("brews", {
   id: serial("id").primaryKey(),
-  coffeeId: serial("coffee_id").references(() => coffees.id),
-  coffeeMakerId: serial("coffeemaker_id").references(() => coffeemakers.id),
-  grinderId: serial("grinder_id").references(() => grinders.id),
-  input: numeric("input").notNull(),
-  output: numeric("output").notNull(),
-  time: numeric("time").notNull(),
-  grindSetting: numeric("grind_setting").notNull(),
-  temperature: numeric("temperature"),
-  pressure: numeric("pressure"),
+  coffeeId: integer("coffee_id")
+    .notNull()
+    .references(() => coffees.id),
+  coffeemakerId: integer("coffeemaker_id")
+    .notNull()
+    .references(() => coffeemakers.id),
+  grinderId: integer("grinder_id")
+    .notNull()
+    .references(() => grinders.id),
+  input: real("input").notNull(),
+  output: real("output").notNull(),
+  time: real("time").notNull(),
+  grindSetting: varchar("grind_setting").notNull(),
+  temperature: real("temperature"),
+  pressure: real("pressure"),
   preInfusion: boolean("pre_infusion"),
   otherNotes: text("other_notes"),
-  rating: numeric("rating").notNull(),
+  rating: integer("rating").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
